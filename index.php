@@ -17,7 +17,7 @@ try {
         //$response->getChildren();
     }
     else
-        echo $output. "\n";
+        echo $response. "\n";
 } catch (Exception $ex) {
     echo $ex->getMessage() . "\n";
 }

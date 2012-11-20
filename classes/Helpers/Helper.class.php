@@ -50,15 +50,16 @@ HELP;
         
         // Set other params
         if (isset($options[self::DIRECTORY_SHORTCUT])) {
-            if (!is_dir($options[self::DIRECTORY_SHORTCUT]))
-                throw new Exception('Invalid directory requested \'' . $options[self::DIRECTORY_SHORTCUT] .'\''); 
+            $realpath = realpath($options[self::DIRECTORY_SHORTCUT]);
+            if (!is_dir($realpath))
+                throw new Exception('Invalid directory requested \'' . $options[self::DIRECTORY_SHORTCUT] .'\'. Use --help option for function definition.'); 
             else 
-                $directory = rtrim ($options[self::DIRECTORY_SHORTCUT],DS);
+                $directory = rtrim ($realpath,DS);
         } else
             $directory = getcwd();
         
         $filesize = isset($options[self::FILESIZE_SHORTCUT]);
-        
+        //echo $directory;die();
         return self::createDirectoryStructure($directory,0,$filesize);
     }
     

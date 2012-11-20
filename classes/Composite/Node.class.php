@@ -19,9 +19,12 @@ abstract class Node {
      */
     final public function pad($level = 0){
         $pad = "";
+        
         if ($level === 0) return $pad;
-        for ($i=0;$i<$level;$i++)
+        
+        for ($i=0 ; $i < $level ; $i++)
             $pad .= "\t";
+        
         return $pad;
     }
 }

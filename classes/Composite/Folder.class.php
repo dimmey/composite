@@ -37,12 +37,12 @@ class Folder extends Node {
     }
     
     public function remove(Node $node){
-//        $index = array_search($node, $this->children, true);
-//        if ($index === false) {
-//            return false;
-//        }
-//        array_splice($this->children, $index, 1);
-//        return true;
+        $index = array_search($node, $this->children, true);
+        if ($index === false)
+            return false;
+        array_splice($this->children, $index, 1);
+        $this->size=0;
+        return true;
     }
     /**
      * Computes node size by retrieving it's children's size
@@ -60,6 +60,7 @@ class Folder extends Node {
      */
     public function output(){
         echo ($this->showSize ? str_pad($this->size(), 10, ' ', STR_PAD_LEFT) . ' ' : '') . $this->pad($this->depth) . "{$this->name}\n";
+        
         if (is_array($this->children) && count($this->children))
             foreach ($this->children as $child)
                 echo $child->output();
@@ -69,6 +70,18 @@ class Folder extends Node {
      */
     public function getChildren(){
         return $this->children;
+    }
+    
+    /**
+     * Returns specific Child
+     * @param integer $key the key of child in children array
+     * @return array of Node objects | Node object | false if object not found
+     */
+    public function getChild($key){
+        if (array_key_exists($key, $this->children))
+            return $this->children[$key];
+        else
+            return false;
     }
 }
 ?>
