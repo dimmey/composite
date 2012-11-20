@@ -1,15 +1,20 @@
 <?php
 define ('DS',DIRECTORY_SEPARATOR);
-require_once 'Node.class.php';
-require_once 'Helper.class.php';
+require_once 'classes/Composite/Folder.class.php';
+require_once 'classes/Composite/File.class.php';
+require_once 'classes/Helpers/Helper.class.php';
     
 
 try {
+    //Get user Input
     $input = Helper::hadleInput();
-    $output = Helper::createResponse($input);
+    //Create Tree structure of directory contents
+    $response = Helper::createResponse($input);
 
-    if ($output instanceof Node){
-        echo $output->output(). "\n";
+    if ($response instanceof Node){
+        $response->output(). "\n";
+        //Get array of objects created
+        //$response->getChildren();
     }
     else
         echo $output. "\n";
