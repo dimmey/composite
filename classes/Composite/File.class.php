@@ -19,7 +19,7 @@ class File extends Node {
      */
     public function __construct($path,$depth,$showSize) {
         if (!file_exists($path))
-            throw new Exception("File '$path' does not exist");
+            throw new Exception(__Class__ . "::" . __FUNCTION__ . " File '$path' does not exist");
         
         $this->path = $path;
         $this->name = ltrim(strrchr($path,DS),DS);

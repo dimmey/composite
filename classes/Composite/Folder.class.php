@@ -20,7 +20,7 @@ class Folder extends Node {
      */
     public function __construct($path,$depth,$showSize=false) {
         if (!is_dir($path))
-            throw new Exception("'$path' is not a valid directory");
+            throw new Exception(__Class__ . "::" . __FUNCTION__ . " '$path' is not a valid directory");
         $this->path = $path;
         $this->name = strrchr($path,DS);
         $this->depth = $depth;
@@ -63,13 +63,17 @@ class Folder extends Node {
     }
     /**
      * Outputs Node and it's contents
+     * Format:
+     *  - Size of file in bytes (if showSize is set)
+     *  - N tabs, where N = depth of Node in the tree structure
+     *  - Folder Name
      */
     public function output(){
         echo ($this->showSize ? str_pad($this->size(), 10, ' ', STR_PAD_LEFT) . ' ' : '') . $this->pad($this->depth) . "{$this->name}\n";
         
         if (is_array($this->children) && count($this->children))
             foreach ($this->children as $child)
-                echo $child->output();
+                $child->output();
     }
     /**
      * Returns the array with Object's children
