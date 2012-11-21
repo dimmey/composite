@@ -17,7 +17,7 @@ abstract class Node {
      */
     public function __construct($depth) {
         if (!is_numeric($depth))
-            throw new Exception(__Class__ . "::" . __FUNCTION__ . " Invalid input depth ($depth)");
+            throw new Exception(__CLASS__ . "::" . __FUNCTION__ . " Invalid input depth ($depth)");
         
         $this->depth = $depth;
     }
