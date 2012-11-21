@@ -6,7 +6,6 @@ class Helper{
     const DIRECTORY_SHORTCUT    = 'd';
     const FILESIZE_SHORTCUT     = 's';
     const HELP_SHORTCUT         = 'help';
-    //To be written....
     const HELP_MESSAGE = <<<HELP
 Composite.php creates the tree structure of the contents of
 a given directory
@@ -41,7 +40,7 @@ HELP;
      */
     public static function createResponse($options){
         if (!is_array($options)) {
-            throw new Exception ('Invalid Input (' . __FUNCTION__ . ')');
+            throw new Exception (__CLASS__ . '::' . __FUNCTION__ . ' Invalid Input');
             return false;
         }
         // If user needs help, ignore all other input params and show help
@@ -52,14 +51,14 @@ HELP;
         if (isset($options[self::DIRECTORY_SHORTCUT])) {
             $realpath = realpath($options[self::DIRECTORY_SHORTCUT]);
             if (!is_dir($realpath))
-                throw new Exception('Invalid directory requested \'' . $options[self::DIRECTORY_SHORTCUT] .'\'. Use --help option for function definition.'); 
+                throw new Exception("Invalid directory requested '" . $options[self::DIRECTORY_SHORTCUT] ."'.\n" . self::HELP_MESSAGE); 
             else 
                 $directory = rtrim ($realpath,DS);
         } else
             $directory = getcwd();
         
         $filesize = isset($options[self::FILESIZE_SHORTCUT]);
-        //echo $directory;die();
+        
         return self::createDirectoryStructure($directory,0,$filesize);
     }
     
@@ -71,9 +70,9 @@ HELP;
      * @param boolean $showFileSize Specifies whether the filesizes of contents will be calculated
      * @return Node
      */
-    public static function createDirectoryStructure($path,$depth=0,$showFileSize=false){
+    public static function createDirectoryStructure($path,$depth,$showFileSize=false){
         if (!($path) || !is_dir($path))
-            throw new Exception("Invalid input directory '$path'");
+            throw new Exception("Invalid input directory '$path'\n" . self::HELP_MESSAGE);
 
 
         $root = new Folder($path,$depth,$showFileSize);

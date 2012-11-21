@@ -8,7 +8,6 @@ require_once 'Node.class.php';
 class File extends Node {
     protected $path,
               $size,
-              $depth,
               $name,
               $showSize;
     
@@ -16,18 +15,20 @@ class File extends Node {
      * Constructor method
      * @param string $path File path
      * @param integer $depth Depth of file in tree structure
-     * @param boolean $size Whether to calculate and show size
+     * @param boolean $showSize Whether to calculate and show size
      */
     public function __construct($path,$depth,$showSize) {
         if (!file_exists($path))
             throw new Exception("File '$path' does not exist");
+        
         $this->path = $path;
-        $this->depth = $depth;
         $this->name = ltrim(strrchr($path,DS),DS);
         $this->showSize = $showSize;
         // If size is not needed for display it is not calculated
         if ($this->showSize)
             $this->size = filesize($path);
+        
+        parent::__construct($depth);
     }
     
     /**

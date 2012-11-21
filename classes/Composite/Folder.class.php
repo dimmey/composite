@@ -7,35 +7,40 @@ require_once 'Node.class.php';
  */
 class Folder extends Node {
     protected $path,
-              $depth,
               $size=0,
               $children,
               $name,
               $showSize;
     
     /**
-     * Constructor Class
+     * Constructor Mehtod
      * @param string $path Directory path
      * @param int $depth Depth of node in tree structure
      * @param boolean $showSize Whether to show Node size
      */
-    public function __construct($path,$depth=0,$showSize=false) {
+    public function __construct($path,$depth,$showSize=false) {
         if (!is_dir($path))
             throw new Exception("'$path' is not a valid directory");
         $this->path = $path;
         $this->name = strrchr($path,DS);
         $this->depth = $depth;
         $this->showSize = $showSize;
+        parent::__construct($depth);
     }
     
     /**
-     * Adds a new node to the object
+     * Adds a node to children
+     * @param Node $node The node to be added
      */
     public function add(Node $node){
         $this->children[] = $node;
         $this->size = 0;//reset size if already computed, it must be recomputed!
     }
     
+    /**
+     * Removes a node from children
+     * @param Node $node The node to be removed
+     */
     public function remove(Node $node){
         $index = array_search($node, $this->children, true);
         if ($index === false)
@@ -46,6 +51,7 @@ class Folder extends Node {
     }
     /**
      * Computes node size by retrieving it's children's size
+     * @return integer The size of the Object
      */
     public function size(){
         if ($this->size === 0) {
@@ -66,6 +72,7 @@ class Folder extends Node {
                 echo $child->output();
     }
     /**
+     * Returns the array with Object's children
      * @return array The array whith node's children
      */
     public function getChildren(){
