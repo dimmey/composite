@@ -20,7 +20,7 @@ class Folder extends Node {
      */
     public function __construct($path,$depth,$showSize=false) {
         if (!is_dir($path))
-            throw new Exception(__Class__ . "::" . __FUNCTION__ . " '$path' is not a valid directory");
+            throw new Exception(__CLASS__ . "::" . __FUNCTION__ . " '$path' is not a valid directory");
         $this->path = $path;
         $this->name = strrchr($path,DS);
         $this->depth = $depth;
